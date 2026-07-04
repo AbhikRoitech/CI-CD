@@ -3,6 +3,7 @@ services:
   # ── Auth microservice ───────────────────────────────────────────────────────
   auth-service:
     build: ./services/auth-service
+    image: abhik98/cicd-auth-service:latest
     env_file:
       - ./services/auth-service/.env      # DB_* point at the Aurora cluster
     restart: unless-stopped
@@ -12,6 +13,7 @@ services:
   # ── Todo microservice ───────────────────────────────────────────────────────
   todo-service:
     build: ./services/todo-service
+    image: abhik98/cicd-todo-service:latest
     env_file:
       - ./services/todo-service/.env
     restart: unless-stopped
@@ -22,6 +24,7 @@ services:
   # Single backend entry point. Not host-exposed — only the client reaches it.
   gateway:
     build: ./services/gateway
+    image: abhik98/cicd-gateway:latest
     restart: unless-stopped
     networks:
       - todo-network
@@ -33,6 +36,7 @@ services:
   # The ONLY host-exposed container. Serves the SPA and forwards /api → gateway.
   client:
     build: ./client
+    image: abhik98/cicd-client:latest
     ports:
       - "80:80"
     restart: unless-stopped

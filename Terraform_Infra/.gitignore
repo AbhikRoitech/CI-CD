@@ -1,0 +1,11 @@
+# Terraform state can contain secrets (DB passwords, etc.) — never commit it.
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+crash.log
+*.tfplan
+
+# Keep terraform.tfvars OUT of git if it ever holds secrets. Right now it only
+# has non-sensitive network values; remove the next line if you want to commit it.
+# terraform.tfvars

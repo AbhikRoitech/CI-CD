@@ -5,6 +5,7 @@ services:
   # Not exposed to the host — only the gateway can reach it (internal network).
   auth-service:
     build: ./services/auth-service
+    image: abhik98/cicd-auth-service:latest
     env_file:
       - ./services/auth-service/.env      # PORT, DB_* (Aurora endpoint), JWT_SECRET
     networks:
@@ -14,6 +15,7 @@ services:
   # Owns todo_db (todos). Verifies JWTs with the SAME JWT_SECRET as auth-service.
   todo-service:
     build: ./services/todo-service
+    image: abhik98/cicd-todo-service:latest
     env_file:
       - ./services/todo-service/.env
     networks:
@@ -24,6 +26,7 @@ services:
   # Clients never talk to the services directly — only to the gateway.
   gateway:
     build: ./services/gateway
+    image: abhik98/cicd-gateway:latest
     networks:
       - todo-network
     depends_on:
@@ -34,6 +37,7 @@ services:
   # Serves the built React app and forwards /api → gateway.
   client:
     build: ./client
+    image: abhik98/cicd-client:latest
     ports:
       - "80:80"
     networks:
